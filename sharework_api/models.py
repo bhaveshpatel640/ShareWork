@@ -5,7 +5,8 @@ from django.db import models
 
 class Urls(models.Model):
     id = models.AutoField(db_column='url_id', primary_key=True)
-    short_url = models.SlugField(db_column='short_url', blank=False)
+    short_url = models.SlugField(
+        db_column='short_url', max_length=7, blank=False, unique=True)
     title = models.CharField(
         db_column='title', max_length=255, blank=False, default='')
     long_url = models.URLField(

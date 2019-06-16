@@ -118,15 +118,64 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOCAL_LOCATION_OF_LOG = "/tmp/log_files/"
+
+# making directory if not exits to store log file in local machine
+if not os.path.exists(LOCAL_LOCATION_OF_LOG):
+    os.makedirs(LOCAL_LOCATION_OF_LOG)
+
+# Just for demonstration purpose.
+LOGFILE_SIZE = 1024 * 1024 * 10
+
+# Log file count
+LOGFILE_COUNT = 9999
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'details': {
+            'format': '%(levelname)-8s %(asctime)s,%(msecs)d  [%(filename)s:%(lineno)d] %(message)s',
+            'datefmt': "%d-%m-%Y %H:%M:%S"
+        },
+
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOCAL_LOCATION_OF_LOG + 'sharework_api.log',
+            'formatter': 'details',
+            'maxBytes': LOGFILE_SIZE,
+            'backupCount': LOGFILE_COUNT,
+        },
+    },
+    'loggers': {
+        'sharework_api': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    }
+}
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer',
+#     )
+# }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+
+# see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 
 # default static files settings for PythonAnywhere.
-# see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
-MEDIA_ROOT = u'/home/bhaveshpatel640/sharework/media'
-MEDIA_URL = '/media/'
+
+# MEDIA_ROOT = u'/home/bhaveshpatel640/sharework/media'
+# MEDIA_URL = '/media/'
+
 STATIC_ROOT = u'/home/bhaveshpatel640/sharework/static'
 STATIC_URL = '/static/'
