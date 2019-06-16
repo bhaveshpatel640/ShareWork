@@ -1,5 +1,5 @@
-# sharework
-sharework sample project
+# ShareWork
+ShareWork project
 
 Create virtual Env
 
